@@ -1,10 +1,7 @@
 language: python
+python:
+- 3.6
 services:
 - postgresql
 script:
 - echo 0
-deploy:
-  provider: heroku
-  api_key:
-    secure: RIhNy/TeqD14nUQKeuO6huTx3IYf4ETGH1a/oCBcUO0Jw00Y75CR56/8OC/wp6oLsIMt70R98ssah8hyqA/K7cc5rx/J87k/8OGOx2b6nyPtdHuPkpnutE7x9B/QW7bdQIZSq4zLX7bXbzFR22pOaRJUB7ndYaWS8jcJwjIaqW6pib/DrwqPukoM7B9hqoil0VOw85ucEkKaa7qj5h8YK86SHsAPBzNYqMlJIjXws0t1gFPqPXSOxN7XlKipokmzAag9KqqH/i3aFwjIFOv2hqRIMNNGQimZVaCoBcmoe1LBfgx7NVzJQuCM0+5an+N8kVoNdn7ZwyJDdlW9idDIp9dEM2KeRakglsRWSDehRK2BluX4B+rzDJRqyLdBZjyghpyo4EsgWzWWFzmylmmQ2+7xUkgMqImyLT5fNMwsGMvV4Bt927ertVDsfapA16F/6Pg2ew0cZQX9AKZ88FI3H+J5ZlQxg3wMaCW411wiSaXLWgShRcSun9n0xzSU9mOeoz/Yj+MHzfk0Q0Cd5Us3aPi04wjZCk0EYQGCxebhlhx8kPvC4E6k3MmBIs/AWQYUqkPYVu+ugm5WX5X2GrbTXVDnIj4N8zX1BjyBncIEREvJzOA8/hZZtL8pTlYFQIsCw1CxGKT91D46Kg1GOY+vVvAsRC0b4jDkutCSHxlTxdg=
-  app: gelkin

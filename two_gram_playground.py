@@ -1,3 +1,4 @@
+import math
 import re
 
 
@@ -10,7 +11,8 @@ def get_prob_of_word_in_lang(word, probs):
     prob = 1
     for ch_first, ch_second in zip(word[:-1], word[1:]):
         if ch_first in probs and ch_second in probs[ch_first]:
-            prob *= probs[ch_first][ch_second]
+            # conditional probability
+            prob *= probs[ch_first][ch_second] / sum(probs[ch_first].values())
         else:
             return 0
     return prob
@@ -37,14 +39,14 @@ def build_probs(text):
     return probs
 
 
-def prepare_text(filename):
-    with open(filename) as f:
+def prepare_text(filename, encoding='utf-8'):
+    with open(filename, encoding=encoding) as f:
         text = f.read()
         text = text.lower()
         return "".join(["$" + re.sub('\W+', '', word) + "&" for word in text.split()])
 
-ukr_text = prepare_text("./res/ukr_tigrolovi.txt")
-rus_text = prepare_text("./res/moskva_petushki.txt")
+ukr_text = prepare_text("./res/simya.txt", encoding='windows-1251')
+rus_text = prepare_text("./res/voina_i_mir.txt", encoding='windows-1251')
 
 ukr_alphabet = get_letters_of_alphabet(ukr_text)
 rus_alphabet = get_letters_of_alphabet(rus_text)
@@ -54,7 +56,7 @@ print(get_letters_of_alphabet(rus_text))
 ukr_probs = build_probs(ukr_text)
 rus_probs = build_probs(rus_text)
 
-word = "кур"
+word = "як"
 ukr_prob = get_prob_of_word_in_lang(word, ukr_probs)
 rus_prob = get_prob_of_word_in_lang(word, rus_probs)
 print(ukr_prob)
