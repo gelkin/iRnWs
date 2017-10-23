@@ -63,8 +63,8 @@ def prepare_text(filename, encoding='utf-8'):
 
 
 def run_example_of_lang_detection(word="як"):
-    ukr_text = prepare_text("./res/simya.txt", encoding='windows-1251')
-    rus_text = prepare_text("./res/voina_i_mir.txt", encoding='windows-1251')
+    ukr_text = prepare_text("./res/books/simya.txt", encoding='windows-1251')
+    rus_text = prepare_text("./res/books/voina_i_mir.txt", encoding='windows-1251')
     ukr_probs = build_probs(ukr_text)
     rus_probs = build_probs(rus_text)
     ukr_prob = get_prob_of_word(word, ukr_probs)
