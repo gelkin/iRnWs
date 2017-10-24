@@ -15,9 +15,10 @@ def search():
         abort(400)
 
     query = str(json['query']).strip()
+    type_of_search = str(json['type_of_search'])
 
     return jsonify(
-        results=search_backend.search(query)
+        results=search_backend.search(query, type_of_search)
     )
 
 

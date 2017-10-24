@@ -5,8 +5,8 @@ from nltk import RegexpTokenizer, defaultdict, re
 from nltk.stem.porter import *
 
 
-def search(query_string):
-    result_list = []
+def search(query_string, type_of_search):
+    result_list = [{'title': "TYPE OF SEARCH", 'snippet': type_of_search, 'href': "fuu"}]
     for i in range(10):
         result_list.append({
             'title': 'Dummy title for result #{} of query “{}”'.format(i + 1, query_string),

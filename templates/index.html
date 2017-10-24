@@ -22,7 +22,8 @@
                     contentType: "application/json",
                     dataType: "json",
                     data: JSON.stringify({
-                        query: $('input[name="q"]').val()
+                        query: $('input[name="q"]').val(),
+                        type_of_search: $('input[name="gender"]').val()
                     })
                 }).done(function (response) {
                     $('div.result-area').html('');
@@ -70,6 +71,11 @@
                 </div>
             </form>
         </div>
+        <form name="search_type">
+          <input type="radio" name="gender" value="Phrase" checked> Phrase search
+          <input type="radio" name="gender" value="AND"> AND
+          <input type="radio" name="gender" value="OR"> OR
+        </form>
     </nav>
     </header>
 
