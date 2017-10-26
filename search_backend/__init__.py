@@ -33,12 +33,18 @@ def search(query, type_of_search, max_docs_n=10):
 
 
 def prepare_arguments(query, stopwords=set()):
+    """
+    Split a string into list of meaningful words
+    :param query:
+    :param stopwords:
+    :return:
+    """
     tokens = query.split()
     prepared_tokens = []
     stemmer = PorterStemmer()
     for token in tokens:
         token = re.sub('\W+', '', token)
-        token = stemmer.stem(token)
+        token = stemmer.stem(token).lower()
         if token and token not in stopwords:
             prepared_tokens.append(token)
     return prepared_tokens
@@ -46,7 +52,8 @@ def prepare_arguments(query, stopwords=set()):
 
 def get_english_stopwords():
     with open("./res/stopwords/english") as f:
-        return set(f.read().split(','))
+        stemmer = PorterStemmer()
+        return {stemmer.stem(w) for w in f.read().split(',')}
 
 
 def get_all_docs(path):
