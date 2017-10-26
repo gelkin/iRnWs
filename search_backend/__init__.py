@@ -4,15 +4,31 @@ import pickle
 from nltk import RegexpTokenizer, defaultdict, re
 from nltk.stem.porter import *
 
+python_docs_base_path = './res/python-3.6.3-docs-text'
+path_to_index = './res/python_lib_index.pkl'
 
-def search(query_string, type_of_search):
+
+def search(query, type_of_search, max_docs_n=10):
+    index = read_index(path_to_index)
     result_list = [{'title': "TYPE OF SEARCH", 'snippet': type_of_search, 'href': "fuu"}]
-    for i in range(10):
-        result_list.append({
-            'title': 'Dummy title for result #{} of query “{}”'.format(i + 1, query_string),
-            'snippet': 'Dummy snippet',
-            'href': 'http://www.example.com'
-        })
+    args = prepare_arguments(query, stopwords=index.stopwords)
+    result_docs = []
+    if type_of_search == 'Phrase':
+        result_docs = Index.filter_doc_ids(index.get_all_docs_containing_phrase(args))
+    elif type_of_search == 'OR':
+        result_docs = Index.filter_doc_ids(index.OR_boolean_search(args))
+    elif type_of_search == 'AND':
+        result_docs = Index.filter_doc_ids(index.AND_boolean_search(args))
+    else:
+        result_list.append({'title': "PROBLEM OCCURED: NONE OF THE search types are chosen", 'snippet': type_of_search, 'href': "fuu"})
+    for doc_id in result_docs:
+        result_list.append(
+            {
+                'title': "Document found:",
+                'snippet': index.get_doc_name_from_ind(doc_id),
+                'href': "fuu"
+            }
+        )
     return result_list
 
 
@@ -150,13 +166,13 @@ class Index:
                 acc_docs.add(doc_id)
             else:
                 rej_docs.add(doc_id)
-        return acc_docs
+        return list(sorted(acc_docs))
 
     def OR_boolean_search(self, args):
         acc_docs = set()
         for arg in args:
             acc_docs |= {doc_id for doc_id, _ in self[arg]}
-        return acc_docs
+        return list(sorted(acc_docs))
 
     def next_phrase(self, terms, pos=(-1, -1)):
         last_pos = pos
@@ -179,3 +195,18 @@ class Index:
         else:
             return self.next_phrase(terms, first_pos)
 
+    def get_all_docs_containing_phrase(self, terms, pos=(-1, -1), max_docs_n=10):
+        res = pos, pos
+        res_docs_ind = set()
+        while res is not None:
+            res = self.next_phrase(terms, pos=res[0])
+            if res is not None:
+                res_docs_ind.add(res[0][0])
+        return res_docs_ind
+
+    @staticmethod
+    def filter_doc_ids(set_doc_ids, max_docs_n=10):
+        return list(sorted(set_doc_ids))[:max_docs_n]
+
+    def get_doc_name_from_ind(self, doc_id):
+        return self.docs[doc_id]
