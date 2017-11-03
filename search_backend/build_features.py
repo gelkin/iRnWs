@@ -9,15 +9,13 @@ stemmer = PorterStemmer()
 stopwords = get_english_stopwords()
 
 
-def get_vector(query, doc_text, doc_title):
-    query_prepared = prepare_arguments(query, stopwords)
+def get_features_vector(query_prepared, doc_text, doc_title):
     query_prepared_set = set(query_prepared)
     text_prepared_list = prepare_arguments(doc_text, stopwords)
-    text_prepared_set = set(text_prepared_list)
     title_prepared_list = prepare_arguments(doc_title, stopwords)
     title_prepared_set = set(title_prepared_list)
     # feature initialization
-    features = []
+    features = [0] * 24
     features[0] = covered_query_term_number(query_prepared_set, title_prepared_set)
     features[1] = covered_query_term_ratio(query_prepared_set, title_prepared_set)
     # get_stream_length
@@ -106,6 +104,8 @@ def mean_of_term_frequency(freqs: dict):
 
 # 12, 13
 def variance_of_term_frequency(freqs: dict):
+    if len(list(freqs.keys())) == 1:
+        return 0
     return variance(freqs.values())
 
 
@@ -131,4 +131,6 @@ def mean_of_stream_length_normalized_term_frequency(freqs: dict, stream_length: 
 
 # 22, 23
 def variance_of_stream_length_normalized_term_frequency(freqs: dict, stream_length: int):
+    if len(list(freqs.keys())) == 1:
+        return 0
     return variance_of_term_frequency(freqs) / stream_length

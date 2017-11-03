@@ -41,7 +41,7 @@ def test_AND_boolean_search():
     args = search_backend.prepare_arguments(query, stopwords=index.stopwords)
     res = index.AND_boolean_search(args)
     true_res = {89, 416, 451, 452, 454, 104, 169, 458, 463, 80, 241, 338, 57, 91, 30}
-    assert res == true_res
+    assert set(res) == true_res
 
 
 def test_OR_boolean_search():
@@ -51,4 +51,4 @@ def test_OR_boolean_search():
     args = search_backend.prepare_arguments(query, stopwords=index.stopwords)
     res = index.OR_boolean_search(args)
     true_res = {0, 449, 450, 451, 448, 453, 454, 332, 176, 338, 435}
-    assert res == true_res
+    assert set(res) == true_res

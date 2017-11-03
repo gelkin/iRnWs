@@ -39,21 +39,24 @@ def readPages(filename):
 
 path = '../data/'
 filename = 'enwiki-20171020-pages-articles1.xml-p10p30302.bz2'
-pkl_path = './res/wiki_index.pkl'
-# num_articles = getNumArticles(path + filename)
-# print(num_articles)
-# docs_number = 5000
-# eng_stopwords = get_english_stopwords()
-# docs_iter = islice(readPages(path + filename), docs_number)
-# index = IndexWiki(eng_stopwords, docs_iter, docs_number)
-# search_backend.serialize_index_wiki(index, pkl_path)
-# print(index.titles)
-# print(index.index)
-time_beginning = datetime.datetime.now()
-index = search_backend.read_index(pkl_path)
-print(len(index.titles))
-time_diff = datetime.datetime.now() - time_beginning
-print("time passed: " + "{}:{}".format(time_diff.seconds // 60, time_diff.seconds % 60))
-# print(index.index)
-# for page_id, page_title, page_text in islice(readPages(path + filename), docs_number):
+pkl_index_path = './res/wiki_index.pkl'
 
+
+def create_wiki_index(docs_number=5000):
+    # num_articles = getNumArticles(path + filename)
+    # print(num_articles)
+    eng_stopwords = get_english_stopwords()
+    docs_iter = islice(readPages(path + filename), docs_number)
+    index = IndexWiki(eng_stopwords, docs_iter, docs_number)
+    search_backend.serialize_index_wiki(index, pkl_index_path)
+    # print(index.titles)
+    # print(index.index)
+
+
+def read_wiki_index_from_pkl(filename):
+    # time_beginning = datetime.datetime.now()
+    index = search_backend.read_index(filename)
+    # print(len(index.titles))
+    # time_diff = datetime.datetime.now() - time_beginning
+    # print("time passed: " + "{}:{}".format(time_diff.seconds // 60, time_diff.seconds % 60))
+    return index

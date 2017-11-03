@@ -33,7 +33,11 @@ def search(query, type_of_search, max_docs_n=10):
     return result_list
 
 
-def prepare_arguments(query, stopwords=set()):
+def prepare_arguments_eng_stopwords(query):
+    return prepare_arguments(query, get_english_stopwords())
+
+
+def prepare_arguments(query, stopwords):
     """
     Split a string into list of meaningful words
     :param query:
@@ -84,6 +88,9 @@ class IndexWiki:
         self.titles = {}
         self.index = defaultdict(list)
         self.build_index_from_iterable_docs(docs_iter, total_docs_num)
+
+    def __getitem__(self, item):
+        return self.index[item]
 
     def build_index_from_iterable_docs(self, docs_iter, total_docs_num):
         """
