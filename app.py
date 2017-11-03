@@ -1,5 +1,6 @@
 from flask import Flask, render_template, jsonify, abort, request
-import search_backend
+from search_backend.wiki_search import WikiSearch
+
 app = Flask(__name__)
 
 
@@ -14,11 +15,13 @@ def search():
     if not json or json.get('query') is None:
         abort(400)
 
+    search_engine = WikiSearch.get_search_engine()
+
     query = str(json['query']).strip()
-    type_of_search = str(json['type_of_search'])
 
     return jsonify(
-        results=search_backend.search(query, type_of_search)
+        # results=search_backend.search(query, type_of_search)
+        results=search_engine.search(query)
     )
 
 

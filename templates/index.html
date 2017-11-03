@@ -22,8 +22,7 @@
                     contentType: "application/json",
                     dataType: "json",
                     data: JSON.stringify({
-                        query: $('input[name="q"]').val(),
-                        type_of_search: $('input[name="search_type"]:checked').val()
+                        query: $('input[name="q"]').val()
                     })
                 }).done(function (response) {
                     $('div.result-area').html('');
@@ -72,13 +71,14 @@
             </form>
         </div>
     </nav>
-    <div style="margin-left: 50px">
-        <form name="search_type_form">
-          <input style="margin-left: 5px" type="radio" name="search_type" value="Phrase" checked> Phrase search
-          <input style="margin-left: 5px" type="radio" name="search_type" value="AND"> AND
-          <input style="margin-left: 5px" type="radio" name="search_type" value="OR"> OR
-        </form>
-    </div>
+    <!--<div style="margin-left: 50px">-->
+        <!--<form name="search_type_form">-->
+          <!--<input style="margin-left: 5px" type="radio" name="search_type" value="Phrase" checked> Phrase search-->
+          <!--<input style="margin-left: 5px" type="radio" name="search_type" value="AND"> AND-->
+          <!--<input style="margin-left: 5px" type="radio" name="search_type" value="OR"> OR-->
+        <!--</form>-->
+        <!--type_of_search: $('input[name="search_type"]:checked').val()-->
+    <!--</div>-->
     </header>
 
     <div class="card"><div class="card-body result-area">You will see search results here.</div></div>
